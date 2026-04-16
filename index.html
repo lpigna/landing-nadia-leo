@@ -104,26 +104,31 @@
   /* ── COUNTDOWN ── */
   .countdown-section {
     background: var(--sage);
-    padding: 64px 20px 56px;
+    padding: 40px 20px 80px;
     text-align: center;
     position: relative;
     overflow: hidden;
     z-index: 2;
   }
 
-  .countdown-section::before {
-    display: none;
+  .countdown-section::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: -5%; right: -5%;
+    height: 40px;
+    background: var(--cream);
+    border-radius: 50% 50% 0 0 / 40px 40px 0 0;
   }
 
   .countdown-date {
     font-family: 'Jost', sans-serif;
-    font-weight: 300;
-    letter-spacing: 0.35em;
-    font-size: 0.72rem;
-    color: rgba(255,255,255,0.85);
+    font-weight: 400;
+    letter-spacing: 0.3em;
+    font-size: clamp(0.85rem, 2.5vw, 1rem);
+    color: rgba(255,255,255,0.95);
     text-transform: uppercase;
     margin-bottom: 16px;
-    padding-top: 10px;
+    padding-top: 0;
   }
 
   .countdown-message {
@@ -132,14 +137,14 @@
     font-size: clamp(1.4rem, 4vw, 2rem);
     color: var(--white);
     margin-bottom: 36px;
-    line-height: 1.5;
+    line-height: 1;
   }
 
   .countdown-label-top {
     font-family: 'Jost', sans-serif;
     font-weight: 300;
     letter-spacing: 0.3em;
-    font-size: 0.65rem;
+    font-size: 0.80rem;
     color: rgba(255,255,255,0.7);
     text-transform: uppercase;
     margin-bottom: 16px;
@@ -558,7 +563,7 @@
   <section class="event-card reveal">
     <img src="assets/Fiesta-15-Estrella-Neutro-2.gif" alt="Fiesta" class="section-gif">
     <p class="section-tag">Fiesta</p>
-    <h2 class="section-title">Salón Jano's<br>Morón</h2>
+    <h2 class="section-title">Salón<br>Jano's Morón</h2>
     <p class="section-address">Av. Pres. Perón 4852, B1708 Morón<br>Provincia de Buenos Aires</p>
     <p class="section-time">14:00 hs</p>
     <a class="btn" href="https://maps.google.com/?q=Jano%27s+Moron+Av+Pres+Peron+4852+Moron" target="_blank" rel="noopener">Cómo llegar</a>
