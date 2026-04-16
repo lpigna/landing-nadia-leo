@@ -38,46 +38,25 @@
     align-items: center;
     justify-content: center;
     text-align: center;
-    padding: 80px 24px 280px;
+    padding: 80px 24px;
     background: var(--cream);
     overflow: hidden;
-    margin-bottom: 0;
   }
 
   /* Esquina superior izquierda */
   .leaf-top-left {
     position: absolute;
     top: 0; left: 0;
-    width: clamp(280px, 75vw, 600px);
+    width: clamp(220px, 45vw, 520px);
     pointer-events: none;
     z-index: 0;
   }
 
-  /* Esquina superior derecha — espejada horizontalmente */
-  .leaf-top-right {
-    position: absolute;
-    top: 0; right: 0;
-    width: clamp(220px, 55vw, 460px);
-    pointer-events: none;
-    z-index: 0;
-    transform: scaleX(-1);
-  }
-
-  /* Esquina inferior izquierda — espejada verticalmente */
-  .leaf-bottom-left {
-    position: absolute;
-    bottom: 0; left: 0;
-    width: clamp(220px, 55vw, 460px);
-    pointer-events: none;
-    z-index: 0;
-    transform: scaleY(-1);
-  }
-
-  /* Esquina inferior derecha — rotada 180° */
+  /* Esquina inferior derecha — misma imagen rotada 180° */
   .leaf-bottom-right {
     position: absolute;
     bottom: 0; right: 0;
-    width: clamp(280px, 75vw, 600px);
+    width: clamp(220px, 45vw, 520px);
     pointer-events: none;
     z-index: 0;
     transform: rotate(180deg);
@@ -128,11 +107,15 @@
     text-align: center;
     position: relative;
     overflow: hidden;
-    z-index: 2;
   }
 
   .countdown-section::before {
-    display: none;
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 40px;
+    background: var(--cream);
+    border-radius: 0 0 50% 50% / 0 0 40px 40px;
   }
 
   .countdown-date {
@@ -521,13 +504,7 @@
   <!-- Esquina superior izquierda -->
   <img class="leaf-top-left" src="assets/eucalipto.png" alt="">
 
-  <!-- Esquina superior derecha (espejada) -->
-  <img class="leaf-top-right" src="assets/eucalipto.png" alt="">
-
-  <!-- Esquina inferior izquierda (espejada vertical) -->
-  <img class="leaf-bottom-left" src="assets/eucalipto.png" alt="">
-
-  <!-- Esquina inferior derecha (rotada 180°) -->
+  <!-- Esquina inferior derecha (misma imagen, rotada 180°) -->
   <img class="leaf-bottom-right" src="assets/eucalipto.png" alt="">
 
   <div class="hero-content">
