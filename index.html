@@ -29,6 +29,59 @@
     overflow-x: hidden;
   }
 
+  /* ── MUSIC PLAYER ── */
+  .music-btn {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 999;
+    width: 52px;
+    height: 52px;
+    background: rgba(255,255,255,0.92);
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .music-btn:hover {
+    transform: scale(1.08);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.18);
+  }
+
+  @keyframes musicFloat {
+    0%, 100% { transform: translateY(0);    box-shadow: 0 4px 16px rgba(0,0,0,0.12); }
+    50%       { transform: translateY(-5px); box-shadow: 0 8px 20px rgba(0,0,0,0.15); }
+  }
+
+  .music-btn {
+    animation: musicFloat 2.8s ease-in-out infinite;
+  }
+
+  .music-btn.playing {
+    animation: none;
+  }
+
+  .music-btn svg {
+    width: 20px;
+    height: 20px;
+    position: relative;
+    z-index: 1;
+    transition: opacity 0.2s ease;
+  }
+
+  .music-btn .icon-play  { display: block; }
+  .music-btn .icon-pause { display: none;  }
+
+  .music-btn.playing .icon-play  { display: none;  }
+  .music-btn.playing .icon-pause { display: block; }
+
   /* ── HERO ── */
   .hero {
     position: relative;
@@ -44,7 +97,6 @@
     margin-bottom: 0;
   }
 
-  /* Esquina superior izquierda */
   .leaf-top-left {
     position: absolute;
     top: 0; left: 0;
@@ -53,7 +105,6 @@
     z-index: 0;
   }
 
-  /* Esquina inferior derecha — rotada 180° */
   .leaf-bottom-right {
     position: absolute;
     bottom: 0; right: 0;
@@ -498,15 +549,30 @@
 </head>
 <body>
 
+<!-- Audio de fondo (reemplazar src con la canción deseada) -->
+<audio id="bg-music" loop>
+  <source src="assets/marry-you.mp3" type="audio/mpeg">
+</audio>
+
+<!-- ── Botón flotante de música ── -->
+<button class="music-btn" id="music-btn" aria-label="Reproducir música">
+  <!-- Ícono Play -->
+  <svg class="icon-play" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="12" cy="12" r="11" stroke="#6b8f71" stroke-width="1.5"/>
+    <path d="M10 8.5L16 12L10 15.5V8.5Z" fill="#6b8f71"/>
+  </svg>
+  <!-- Ícono Pause -->
+  <svg class="icon-pause" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="12" cy="12" r="11" stroke="#6b8f71" stroke-width="1.5"/>
+    <rect x="9" y="8" width="2.2" height="8" rx="1" fill="#6b8f71"/>
+    <rect x="12.8" y="8" width="2.2" height="8" rx="1" fill="#6b8f71"/>
+  </svg>
+</button>
+
 <!-- ═══════════ HERO ═══════════ -->
 <section class="hero">
-
-  <!-- Esquina superior izquierda -->
   <img class="leaf-top-left" src="assets/eucalipto.png" alt="">
-
-  <!-- Esquina inferior derecha (rotada 180°) -->
   <img class="leaf-bottom-right" src="assets/eucalipto.png" alt="">
-
   <div class="hero-content">
     <h1 class="hero-names">
       Nadia
@@ -620,7 +686,7 @@
   const weddingDate = new Date('2027-02-28T12:00:00-03:00');
 
   function updateCountdown() {
-    const now = new Date();
+    const now  = new Date();
     const diff = weddingDate - now;
     if (diff <= 0) {
       ['days','hours','minutes','seconds'].forEach(u => {
@@ -648,6 +714,22 @@
   const loc    = encodeURIComponent('Catedral Basílica de Morón, Morón, Buenos Aires');
   const detail = encodeURIComponent('¡Nos casamos! Ceremonia 12:00hs – Salón Jano\'s Morón 14:00hs');
   calBtn.href  = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&dates=${start}/${end}&location=${loc}&details=${detail}`;
+
+  // ── Music Player ──
+  const musicBtn = document.getElementById('music-btn');
+  const bgMusic  = document.getElementById('bg-music');
+  let isPlaying  = false;
+
+  musicBtn.addEventListener('click', () => {
+    if (isPlaying) {
+      bgMusic.pause();
+      musicBtn.classList.remove('playing');
+    } else {
+      bgMusic.play().catch(() => {});
+      musicBtn.classList.add('playing');
+    }
+    isPlaying = !isPlaying;
+  });
 
   // ── Scroll reveal ──
   const observer = new IntersectionObserver((entries) => {
